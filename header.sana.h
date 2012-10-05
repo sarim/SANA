@@ -8,10 +8,6 @@
  * ------------------------- *
  */
 
-#ifndef SANAHEADER_H
-#define	SANAHEADER_H
-#endif
-
 
 typedef struct {
     char *data;
