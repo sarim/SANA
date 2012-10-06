@@ -1,7 +1,7 @@
 /*
  * ------------------------- *
  * Application : SANA        *
- * Version : 3.1             *
+ * Version : 3.2             *
  * By : Md. Salman Morshed   *
  * salmanmorshed@gmail.com   *
  * Date : 13-08-2012         *
@@ -13,7 +13,7 @@
 
 
 char defaultBotID[17] = "821635401e34e889";
-float sanaVersion = 3.1;
+float sanaVersion = 3.2;
 
 
 int main(int argc, char **argv) {
@@ -38,17 +38,18 @@ int main(int argc, char **argv) {
         } else {
             strcpy(defaultBotID, argv[2]);
             printf("~ Attention! This is not SANA anymore! \n  Bot ID has been changed to %s\n", defaultBotID);
+            puts("--------------------------------");
         }
 
     } else {
-        puts("SANA is an intelligent chatter bot.");
-        puts("She is friendly and loves to talk!");
+        puts("SANA is an intelligent chatter bot");
+        puts("She is friendly and loves to talk");
         puts("She learns from you and never forgets!");
         puts("--------------------------------");
 
         if (totalCycles < 5) {
             puts("Type \"!help\" to get the available options");
-            puts("Type \"!exit\" to end the conversation and quit");
+            puts("Type \"!exit\" to end the conversation");
             puts("--------------------------------");
         }
     }
@@ -58,7 +59,7 @@ int main(int argc, char **argv) {
         gets(input);
         if (!strcmp(input, "!about")) {
             puts(": SANA is a chatterbot application");
-            puts("  Version 3.1, Released 13-10-2012");
+            puts("  Version 3.2, Released 6 October 2012");
             puts("  Frontend designed in C language");
             puts("  Developed by Md. Salman Morshed");
             puts("  Mail: salmanmorshed@gmail.com");
@@ -74,7 +75,7 @@ int main(int argc, char **argv) {
         }
 
         if (!strcmp(input, "!help")) {
-            puts(": Special commands:");
+            puts(": In-chat commands:");
             puts("  !about \t Get software and developer information");
             puts("  !update \t Check and notify if newer version is available");
             puts("  !reset \t Reset user recognition and data");
@@ -107,7 +108,7 @@ int main(int argc, char **argv) {
 
     if (runCycles >= 10) {
         puts("--------------------------------");
-        puts("  System: Please hang on, this will take a second...");
+        puts(": System: Please hang on, this will take a second...");
         if (VersionCheck("silent")) getchar();
     }
 
@@ -125,9 +126,9 @@ int VersionCheck() {
     vbk = FormatXMLReply(GetXMLReply(defaultBotID, defaultCustID, "latestversionnumber"), 'a');
     float latest = atof(vbk);
     if (latest > sanaVersion) {
-        puts(": New version of SANA is available!");
+        puts(": New version is available!");
         printf("  Current: %1.1f, New: %1.1f\n", sanaVersion, latest);
-        puts("  Run the \"sana-updater.exe\" tool from the installation folder!");
+        puts(FormatXMLReply(GetXMLReply(defaultBotID, defaultCustID, "latestversioninfo"), 'a'));
         return 1;
     } else {
         printf("  You are using the latest version! [%1.1f]\n", latest);

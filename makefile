@@ -3,4 +3,4 @@ CFLAGS = -lcurl
 TARGETS = mainfile.sana.c functions.sana.c
 
 all : $(TARGETS)
-	$(CC) $(TARGETS) -o SANA $(CFLAGS)
+	$(CC) -o SANA $(TARGETS) $(CFLAGS)

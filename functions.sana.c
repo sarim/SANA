@@ -1,7 +1,7 @@
 /*
  * ------------------------- *
  * Application : SANA        *
- * Version : 3.1             *
+ * Version : 3.2             *
  * By : Md. Salman Morshed   *
  * salmanmorshed@gmail.com   *
  * Date : 13-08-2012         *
@@ -39,7 +39,7 @@ char *URLEncode(char *input) {
         temp++;
     }
     *temp = '\0';
-    return output; // Better free() this up after use.
+    return output;
 }
 
 /* *** Function to communicate with the Pandorabots server  *** */
@@ -134,7 +134,7 @@ char *FormatXMLReply(char *xml, char returnType) {
         temp++;
     }
     free(xml);
-    return formatted; // Better free() this up after use.
+    return formatted;
 }
 
 /* *** Function to manage the individual Customer ID  *** */

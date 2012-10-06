@@ -18,4 +18,3 @@ SANA is a chatterbot application, or half of a chatterbot application to be prec
 ## Loading Alien-bots
     You can make SANA load with a different Pandorabot BotID than the built in one. Example:
     $ ./SANA --botid a23qrw9r9uqaij4a
-

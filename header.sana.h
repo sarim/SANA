@@ -1,7 +1,7 @@
 /*
  * ------------------------- *
  * Application : SANA        *
- * Version : 3.1             *
+ * Version : 3.2             *
  * By : Md. Salman Morshed   *
  * salmanmorshed@gmail.com   *
  * Date : 13-08-2012         *
