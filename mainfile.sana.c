@@ -9,10 +9,6 @@
  */
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <curl/curl.h>
 #include "header.sana.h"
 
 
@@ -22,8 +18,8 @@ float sanaVersion = 3.1;
 
 int main(int argc, char **argv) {
     int exitCoin = 0, runCycles = 0, totalCycles;
-    char *defaultCustID = GetCustomerID(defaultBotID);
-    char input[256], *output;
+    char defaultCustID[17], input[300], output[300];
+    strcpy(defaultCustID, GetCustomerID(defaultBotID));
 
     FILE *cycles;
     cycles = fopen("cycles.dat", "r");
@@ -33,8 +29,8 @@ int main(int argc, char **argv) {
         char buf[8];
         fgets(buf, 8, cycles);
         totalCycles = atoi(buf);
+        fclose(cycles);
     }
-    fclose(cycles);
     if (argc == 3 && !strcmp(argv[1], "--botid")) {
         if (strlen(argv[2]) != 16) {
             puts("> Error: Bot ID should be 16-characters in length.");
@@ -51,21 +47,21 @@ int main(int argc, char **argv) {
         puts("--------------------------------");
 
         if (totalCycles < 5) {
-            puts("Type \"!help\" to take a look at the available options");
+            puts("Type \"!help\" to get the available options");
             puts("Type \"!exit\" to end the conversation and quit");
             puts("--------------------------------");
         }
     }
+
     while (!exitCoin) {
         printf("> ");
         gets(input);
         if (!strcmp(input, "!about")) {
-            char *about;
             puts(": SANA is a chatterbot application");
             puts("  Version 3.1, Released 13-10-2012");
-            puts("  Frontend designed in C/C++");
+            puts("  Frontend designed in C language");
             puts("  Developed by Md. Salman Morshed");
-            puts("  salmanmorshed@gmail.com");
+            puts("  Mail: salmanmorshed@gmail.com");
             puts("  Based on ALICE by Dr. Richard Wallace");
             puts("--------------------------------");
             continue;
@@ -98,22 +94,16 @@ int main(int argc, char **argv) {
         } else {
             runCycles++;
         }
-        output = FormatXMLReply(GetXMLReply(defaultBotID, defaultCustID, input), 'a');
+        strcpy(output, FormatXMLReply(GetXMLReply(defaultBotID, defaultCustID, input), 'a'));
         printf(": ");
         puts(output);
-        free(output);
     }
-
     cycles = fopen("cycles.dat", "w");
-    if (cycles == NULL) {
-        fclose(cycles);
-    } else {
         totalCycles += runCycles;
         char buf[8];
         sprintf(buf, "%d", totalCycles);
         fputs(buf, cycles);
         fclose(cycles);
-    }
 
     if (runCycles >= 10) {
         puts("--------------------------------");

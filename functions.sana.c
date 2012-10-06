@@ -9,10 +9,6 @@
  */
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <curl/curl.h>
 #include "header.sana.h"
 
 /* *** Function to URL-encode a string to be used by libCURL  *** */
@@ -152,7 +148,6 @@ char *GetCustomerID(char *botid) {
     FILE *fhandle;
     fhandle = fopen("customer.dat", "r");
     if (fhandle == NULL) {
-        fclose(fhandle);
         char *newCustID;
         puts("Preparing SANA for the first-run...");
         newCustID = FormatXMLReply(GetXMLReply(botid, "", "startnewcustomer"), 'c');

@@ -9,10 +9,17 @@
  */
 
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <curl/curl.h>
+
+
 typedef struct {
     char *data;
     size_t size;
 } dataHolder;
+
 
 char *URLEncode(char *);
 char *GetXMLReply(char *, char *, char *);
