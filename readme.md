@@ -6,12 +6,12 @@ BUILDING THE PROJECT
     > You also need the LibCURL 4 to be configured in your building environment.
     > Clone this repository (or download the sources) in you local storage.
     > Open Terminal/CMD and change to the directory containing the sources.
-    > Issue the "make" command. The project will be compiled as SANA (.exe on Windows).
+    > Issue the `make` command. The project will be compiled as SANA (.exe on Windows).
     > Execute from the Terminal (Double clicking the binary works on Windows only).
 
 
 IN-CHAT COMMANDS
-    SANA packs some in chat commands. Type "!help" to see the available command list. 
+    SANA packs some in chat commands. Type `!help` to see the available command list. 
     NOTE: Every command starts with the "!" symbol, don't forget to type it.
 
 
