@@ -2,12 +2,12 @@ SANA is a chatterbot application, or half of a chatterbot application to be prec
 
 
 BUILDING THE PROJECT
-    > This project needs the standard GCC compiler to be built.
-    > You also need the LibCURL 4 to be configured in your building environment.
-    > Clone this repository (or download the sources) in you local storage.
-    > Open Terminal/CMD and change to the directory containing the sources.
-    > Issue the `make` command. The project will be compiled as SANA (.exe on Windows).
-    > Execute from the Terminal (Double clicking the binary works on Windows only).
+    This project needs the standard GCC compiler to be built.
+    You also need the LibCURL 4 to be configured in your building environment.
+    Clone this repository (or download the sources) in you local storage.
+    Open Terminal/CMD and change to the directory containing the sources.
+    Issue the `make` command. The project will be compiled as SANA (.exe on Windows).
+    Execute from the Terminal (Double clicking the binary works on Windows only).
 
 
 IN-CHAT COMMANDS
