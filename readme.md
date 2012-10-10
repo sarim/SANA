@@ -21,4 +21,4 @@ SANA is a chatterbot application, or half of a chatterbot application to be prec
 
 ## Prebuild Binary
     Download prebuilt binary for Windows with all essential DLLs from this link:
-    `http://www.mediafire.com/?ueynekqae2cvwcp`
+    http://www.mediafire.com/?ueynekqae2cvwcp [3.08 MB]
