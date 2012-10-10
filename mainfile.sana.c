@@ -1,20 +1,17 @@
 /*
  * ------------------------- *
  * Application : SANA        *
- * Version : 3.2             *
+ * Version : 3.3             *
  * By : Md. Salman Morshed   *
  * salmanmorshed@gmail.com   *
- * Date : 13-08-2012         *
+ * Date : 10-10-2012         *
  * ------------------------- *
  */
 
 
 #include "header.sana.h"
 
-
 char defaultBotID[17] = "821635401e34e889";
-float sanaVersion = 3.2;
-
 
 int main(int argc, char **argv) {
     int exitCoin = 0, runCycles = 0, totalCycles;
@@ -22,13 +19,11 @@ int main(int argc, char **argv) {
     strcpy(defaultCustID, GetCustomerID(defaultBotID));
 
     FILE *cycles;
-    cycles = fopen("cycles.dat", "r");
+    cycles = fopen("cycles.dat", "rb");
     if (cycles == NULL) {
         totalCycles = 0;
     } else {
-        char buf[8];
-        fgets(buf, 8, cycles);
-        totalCycles = atoi(buf);
+        fscanf(cycles, "%d", &totalCycles);
         fclose(cycles);
     }
     if (argc == 3 && !strcmp(argv[1], "--botid")) {
@@ -37,7 +32,7 @@ int main(int argc, char **argv) {
             exit(4);
         } else {
             strcpy(defaultBotID, argv[2]);
-            printf("~ Attention! This is not SANA anymore! \n  Bot ID has been changed to %s\n", defaultBotID);
+            printf("Attention! This is not SANA anymore!\nAlien-bot loaded, ID: %s\n", defaultBotID);
             puts("--------------------------------");
         }
 
@@ -59,7 +54,7 @@ int main(int argc, char **argv) {
         gets(input);
         if (!strcmp(input, "!about")) {
             puts(": SANA is a chatterbot application");
-            puts("  Version 3.2, Released 6 October 2012");
+            puts("  Version 3.3, Released 10 October 2012");
             puts("  Frontend designed in C language");
             puts("  Developed by Md. Salman Morshed");
             puts("  Mail: salmanmorshed@gmail.com");
@@ -69,7 +64,7 @@ int main(int argc, char **argv) {
         }
 
         if (!strcmp(input, "!update")) {
-            VersionCheck();
+            VersionCheck(defaultBotID);
             puts("--------------------------------");
             continue;
         }
@@ -78,7 +73,7 @@ int main(int argc, char **argv) {
             puts(": In-chat commands:");
             puts("  !about \t Get software and developer information");
             puts("  !update \t Check and notify if newer version is available");
-            puts("  !reset \t Reset user recognition and data");
+            puts("  !reset \t Reset the user and usage information");
             puts("  !help \t Display the help texts (duh!)");
             puts("  !exit \t Tell SANA goodbye and quit the program");
             puts("--------------------------------");
@@ -87,8 +82,9 @@ int main(int argc, char **argv) {
         if (strstr(input, "!reset")) {
             remove("./customer.dat");
             remove("./cycles.dat");
-            puts("-- Customer data has been reset!");
-            continue;
+            puts("-- SANA has been reset!");
+            goto lastpart;
+            break;
         }
         if (!strcmp(input, "!exit")) {
             exitCoin = 1;
@@ -97,41 +93,19 @@ int main(int argc, char **argv) {
         }
         strcpy(output, FormatXMLReply(GetXMLReply(defaultBotID, defaultCustID, input), 'a'));
         printf(": ");
-        puts(output);
+        puts(StringReplace(output, "&quot;", "\""));
     }
-    cycles = fopen("cycles.dat", "w");
-        totalCycles += runCycles;
-        char buf[8];
-        sprintf(buf, "%d", totalCycles);
-        fputs(buf, cycles);
-        fclose(cycles);
+    cycles = fopen("cycles.dat", "wb");
+    totalCycles += runCycles;
+    fprintf(cycles, "%d", totalCycles);
+    fclose(cycles);
 
     if (runCycles >= 10) {
         puts("--------------------------------");
-        puts(": System: Please hang on, this will take a second...");
-        if (VersionCheck("silent")) getchar();
+        puts(": Please wait, this will only take a second...");
+        if (VersionCheck(defaultBotID)) getchar();
     }
-
-    sleep(1);
+lastpart:
+    sleep(2);
     return 0;
-}
-
-
-
-/* *** Function to check new version availability *** */
-int VersionCheck() {
-    puts(": Looking for updates...");
-    char *vbk, *defaultCustID;
-    defaultCustID = GetCustomerID(defaultBotID);
-    vbk = FormatXMLReply(GetXMLReply(defaultBotID, defaultCustID, "latestversionnumber"), 'a');
-    float latest = atof(vbk);
-    if (latest > sanaVersion) {
-        puts(": New version is available!");
-        printf("  Current: %1.1f, New: %1.1f\n", sanaVersion, latest);
-        puts(FormatXMLReply(GetXMLReply(defaultBotID, defaultCustID, "latestversioninfo"), 'a'));
-        return 1;
-    } else {
-        printf("  You are using the latest version! [%1.1f]\n", latest);
-        return 0;
-    }
 }

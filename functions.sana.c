@@ -1,7 +1,7 @@
 /*
  * ------------------------- *
  * Application : SANA        *
- * Version : 3.2             *
+ * Version : 3.3             *
  * By : Md. Salman Morshed   *
  * salmanmorshed@gmail.com   *
  * Date : 13-08-2012         *
@@ -14,7 +14,7 @@
 /* *** Function to URL-encode a string to be used by libCURL  *** */
 char *URLEncode(char *input) {
     char *output, *temp;
-    temp = (char *) malloc((3 * strlen(input) * sizeof (char)) + 1);
+    temp = (char *) malloc(3 * (strlen(input) + 1) * sizeof (char));
     if (temp == NULL) {
         printf("Fatal Error: Memory allocation failed! [#001]\n");
         sleep(2);
@@ -51,7 +51,7 @@ char *GetXMLReply(char *botid, char *custid, char *inputData) {
     variable.size = 0;
     char *encodedInput;
     encodedInput = URLEncode(inputData);
-    requestURL = malloc(96 + strlen(inputData) * sizeof (char) + 1);
+    requestURL = malloc((96 + strlen(inputData) + 1) * sizeof (char));
     if (requestURL == NULL) {
         printf("Fatal Error: Memory allocation failed! [#004]\n");
         sleep(2);
@@ -139,20 +139,20 @@ char *FormatXMLReply(char *xml, char returnType) {
 
 /* *** Function to manage the individual Customer ID  *** */
 char *GetCustomerID(char *botid) {
-    char *result = malloc(16 + 1);
+    char *result = malloc((16 + 1) * sizeof (char));
     if (result == NULL) {
         printf("Fatal Error: Memory allocation failed! [#005]\n");
         sleep(2);
         exit(6);
     }
     FILE *fhandle;
-    fhandle = fopen("customer.dat", "r");
+    fhandle = fopen("customer.dat", "rb");
     if (fhandle == NULL) {
         char *newCustID;
         puts("Preparing SANA for the first-run...");
         newCustID = FormatXMLReply(GetXMLReply(botid, "", "startnewcustomer"), 'c');
         FILE *f2handle;
-        f2handle = fopen("customer.dat", "w");
+        f2handle = fopen("customer.dat", "wb");
         if (f2handle == NULL) {
             printf("System Error: Problem encountered with File I/O.\n");
             exit(7);
@@ -181,4 +181,51 @@ static size_t WriteFunction(void *contents, size_t size, size_t tempber, void *p
     temp->size += realSize;
     temp->data[temp->size] = 0;
     return realSize;
+}
+
+/* *** Function to check new version availability *** */
+int VersionCheck(char *theBotID) {
+    puts(": Looking for updates...");
+    char *vbk, *theCustID;
+    theCustID = GetCustomerID(theBotID);
+    vbk = FormatXMLReply(GetXMLReply(theBotID, theCustID, "latestversionnumber"), 'a');
+    float latest = atof(vbk);
+    if (latest > SANAVERSION) {
+        puts(": New version is available!");
+        printf("  Current: %1.1f, New: %1.1f\n", SANAVERSION, latest);
+        puts(FormatXMLReply(GetXMLReply(theBotID, theCustID, "latestversioninfo"), 'a'));
+        return 1;
+    } else {
+        printf("  You are using the latest version! [%1.1f]\n", latest);
+        return 0;
+    }
+}
+
+/* *** Function to replace a substring from inside a string *** */
+char *StringReplace(char *str, char *what, char *with) {
+    int strLen = strlen(str);
+    int whatLen = strlen(what);
+    int withLen = strlen(with);
+    signed int delta = 0;
+    delta = withLen - whatLen;
+    int n = 0;
+    char *foo = strstr(str, what);
+    if (foo == NULL) return str;
+    while (foo != NULL) {
+        foo = strstr(foo + whatLen, what);
+        n++;
+    }
+    int newLen = strLen + (n * delta);
+    char *res = (char *) malloc(newLen + 1);
+    memset(res, 0, newLen + 1);
+
+    foo = strstr(str, what);
+    while (foo != NULL) {
+        strncat(res, str, foo - str);
+        strcat(res, with);
+        str = foo + whatLen;
+        foo = strstr(str, what);
+    }
+    strcat(res, str);
+    return res;
 }
