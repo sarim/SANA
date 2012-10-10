@@ -19,6 +19,6 @@ SANA is a chatterbot application, or half of a chatterbot application to be prec
     You can make SANA load with a different Pandorabot BotID than the built in one. Example:
     $ ./SANA --botid a23qrw9r9uqaij4a
 
-## Prebuild Binary
-    Download prebuilt binary for Windows with all essential DLLs from this link:
+## Pre-built Binary
+    Download prebuilt full application from this link (Windows only):
     http://www.mediafire.com/?ueynekqae2cvwcp [3.08 MB]

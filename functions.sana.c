@@ -8,7 +8,6 @@
  * ------------------------- *
  */
 
-
 #include "header.sana.h"
 
 /* *** Function to URL-encode a string to be used by libCURL  *** */

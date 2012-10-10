@@ -8,7 +8,6 @@
  * ------------------------- *
  */
 
-
 #include "header.sana.h"
 
 char defaultBotID[17] = "821635401e34e889";
