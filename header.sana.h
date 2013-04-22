@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
+#include <unistd.h>
 #define SANAVERSION 3.3
 
 typedef struct {

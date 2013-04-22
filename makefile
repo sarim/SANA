@@ -1,4 +1,4 @@
-CC = gcc
+CC = c99
 TARGETS = mainfile.sana.c functions.sana.c
 CFLAGS = -lcurl
 

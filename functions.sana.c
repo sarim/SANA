@@ -16,7 +16,7 @@ char *URLEncode(char *input) {
     temp = (char *) malloc(3 * (strlen(input) + 1) * sizeof (char));
     if (temp == NULL) {
         printf("Fatal Error: Memory allocation failed! [#001]\n");
-        sleep(2);
+        usleep(2000);
         exit(1);
     } else {
         output = temp;
@@ -85,7 +85,7 @@ char *FormatXMLReply(char *xml, char returnType) {
     char startC[12], endC[8], *startP, *endP;
     if (!strlen(xml)) {
         printf("System Error: XML input is NULL. Is the network offline?\n");
-        sleep(2);
+        usleep(2000);
         exit(2);
     }
     int sizeNeeded = 0;
@@ -109,6 +109,7 @@ char *FormatXMLReply(char *xml, char returnType) {
             break;
     }
     char *formatted, *temp;
+    /*
     temp = (char *) malloc((sizeNeeded + 1) * sizeof (char));
     if (temp == NULL) {
         printf("Fatal Error: Memory allocation failed! [#002]\n");
@@ -117,11 +118,11 @@ char *FormatXMLReply(char *xml, char returnType) {
     } else {
         formatted = temp;
     }
-    startP = strstr(xml, startC) + strlen(startC);
+    startP = strstr(xml, startC) + (strlen(startC) * sizeof(char));
     if (returnType == 'a') {
         endP = strstr(xml, endC);
     } else {
-        endP = startP + sizeNeeded;
+        endP = startP + (sizeNeeded * sizeof(char));
     }
     while (1) {
         if (startP == endP) {
@@ -131,9 +132,10 @@ char *FormatXMLReply(char *xml, char returnType) {
         *temp = *startP;
         startP++;
         temp++;
-    }
+    } */
+
     free(xml);
-    return formatted;
+    return "xjxkxkxxlxlxlxlxlxlxlx";
 }
 
 /* *** Function to manage the individual Customer ID  *** */

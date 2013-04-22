@@ -105,6 +105,6 @@ int main(int argc, char **argv) {
         if (VersionCheck(defaultBotID)) getchar();
     }
 lastpart:
-    sleep(2);
+    usleep(2000);
     return 0;
 }
