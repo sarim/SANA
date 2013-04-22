@@ -10,7 +10,7 @@
 
 #include "header.sana.h"
 
-char defaultBotID[17] = "821635401e34e889";
+char defaultBotID[17] = "b9b96b247e34f4f2";
 
 int main(int argc, char **argv) {
     int exitCoin = 0, runCycles = 0, totalCycles;

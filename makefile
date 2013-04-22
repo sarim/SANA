@@ -1,5 +1,5 @@
-CC = c99
-TARGETS = mainfile.sana.c functions.sana.c
+CC = clang
+TARGETS = regex.c mainfile.sana.c functions.sana.c
 CFLAGS = -lcurl
 
 all : $(TARGETS)

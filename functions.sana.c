@@ -82,60 +82,40 @@ char *GetXMLReply(char *botid, char *custid, char *inputData) {
 
 /* *** Function to format the XML output to get the results *** */
 char *FormatXMLReply(char *xml, char returnType) {
-    char startC[12], endC[8], *startP, *endP;
+
     if (!strlen(xml)) {
         printf("System Error: XML input is NULL. Is the network offline?\n");
         usleep(2000);
         exit(2);
     }
-    int sizeNeeded = 0;
+
+    regex_t r;
+    const char * a_regex_text = "<that>(.+)</that>";
+    const char * b_regex_text = "botid=\"(.+)\"";
+    const char * c_regex_text = "custid=\"(.+)\"";
+    const char * d_regex_text = "status=\"(.+)\"";
+
+    const char * regex_text;
+
     switch (returnType) {
         case 'a':
-            strcpy(startC, "<that>");
-            strcpy(endC, "</that>");
-            sizeNeeded = 512;
+            compile_regex(&r, a_regex_text);
             break;
         case 'b':
-            strcpy(startC, "botid=\"");
-            sizeNeeded = 16;
+            compile_regex(&r, b_regex_text);
             break;
         case 'c':
-            strcpy(startC, "custid=\"");
-            sizeNeeded = 16;
+            compile_regex(&r, c_regex_text);
             break;
         default:
-            strcpy(startC, "status=\"");
-            sizeNeeded = 1;
+            compile_regex(&r, d_regex_text);
             break;
     }
-    char *formatted, *temp;
-    /*
-    temp = (char *) malloc((sizeNeeded + 1) * sizeof (char));
-    if (temp == NULL) {
-        printf("Fatal Error: Memory allocation failed! [#002]\n");
-        sleep(2);
-        exit(3);
-    } else {
-        formatted = temp;
-    }
-    startP = strstr(xml, startC) + (strlen(startC) * sizeof(char));
-    if (returnType == 'a') {
-        endP = strstr(xml, endC);
-    } else {
-        endP = startP + (sizeNeeded * sizeof(char));
-    }
-    while (1) {
-        if (startP == endP) {
-            *temp = '\0';
-            break;
-        }
-        *temp = *startP;
-        startP++;
-        temp++;
-    } */
+
+    char * formatted = match_regex(&r, (const char *)xml);
 
     free(xml);
-    return "xjxkxkxxlxlxlxlxlxlxlx";
+    return formatted;
 }
 
 /* *** Function to manage the individual Customer ID  *** */
